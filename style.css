@@ -1,0 +1,104 @@
+@font-face {
+  font-family: 'Sec';
+  src: url('/fonts/TBCContractica-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Book';
+  src: url('/fonts/TBCContractica-Book.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Regular';
+  src: url('/fonts/TBCContracticaCAPS-Regular.ttf') format('truetype');
+}
+.box
+{
+  position: relative;
+  margin: 3px;
+}
+.box .text
+{
+
+  transform: translate(1%,-110%);
+  text-align: center;
+  color: #fff;
+  
+}
+.box .text h2
+{
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+.box .text small
+{
+  font-size: 10px;
+  font-family: 'Regular';
+  font-weight: 100;
+  transform: translateY(25px);
+  display: block;
+}
+
+.circle
+{
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.circle .points {
+  width: 4px;
+  height: 1px;
+  background: #0007;
+  position: absolute;
+  border-radius: 3px;
+  transform: rotate(calc(var(--i)*var(--rot))) translateY(-25px);
+}
+.hung
+{
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.hung .points {
+  width: 4px;
+  height: 1px;
+  background: #0007;
+  position: absolute;
+  border-radius: 3px;
+  transform: rotate(calc(var(--i)*var(--rot))) translateY(-25px);
+}
+.water
+{
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.water .points {
+  width: 4px;
+  height: 1px;
+  background: #0007;
+  position: absolute;
+  border-radius: 3px;
+  transform: rotate(calc(var(--i)*var(--rot))) translateY(-25px);
+}
+.points.marked
+{
+  animation: glow 0.04s linear forwards;
+  animation-delay: calc(var(--i)*0.05s);
+}
+
+@keyframes glow
+{
+  0%
+  {
+      background: #0007;
+      box-shadow: none;
+  }
+  100%
+  {
+      background: var(--bgColor);
+      box-shadow: 0 0 10px var(--bgColor);
+  }
+}

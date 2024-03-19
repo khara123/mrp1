@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        cef.emit("game:hud:setComponentVisible", "interface", false);
+        cef.emit("game:data:pollPlayerStats", true, 50);
+        cef.on("game:data:playerStats", (hp, max_hp, arm, breath, wanted, weapon, ammo, max_ammo, money, speed) => {
+            document.getElementById('hp_value').innerText = Math.round(hp);
+            document.getElementById('arm_value').innerText = arm;
+            document.getElementById('fist').src = `img/guns/${weapon}.png`;
+            if(ammo > 0) {
+                document.getElementById("ammo_value_source").style = "display: none;";
+                document.getElementById("ammo_value").style = "display: block;";
+
+                document.getElementById("ammo_value").innerText = `${ammo} / ${max_ammo}`;
+            }
+            else {
+                document.getElementById("ammo_value_source").style = "display: block;";
+                document.getElementById("ammo_value").style = "display: none;";
+            }
+            document.getElementById("xmoney").innerHTML = `${money}`;
+        });
+    </script>  
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html{
+            height: 100vh;
+        }
+    
+        @font-face {
+            font-family: 'Sec';
+            src: url('./fonts/TBCContractica-Bold.ttf') format('truetype');
+        }
+        @font-face {
+            font-family: 'Book';
+            src: url('./fonts/TBCContractica-Book.ttf') format('truetype');
+        }
+        @font-face {
+            font-family: 'Regular';
+            src: url('./fonts/TBCContracticaCAPS-Regular.ttf') format('truetype');
+        }
+        body {
+            /*background-image: url("./img/sa-mp-052.png");
+            background-size: cover;
+            background-repeat: no-repeat;*/
+            user-select: none;
+            overflow: hidden;
+            height: 100vh;
+            margin: 0; 
+        }
+        header {
+            padding: 20px 10px;
+            display: flex;
+            justify-content: flex-end; /* Changed from "end" to "flex-end" */
+        }
+        nav{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        ul {
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            gap: 10px;
+            margin: 0; 
+            padding: 0; 
+            list-style: none; 
+        }
+        h2, h3 {
+            color: white;
+            font-family: 'Sec'; /* Changed from Sec to 'Sec' */
+            margin: 0;
+            padding: 5px; 
+            transform: translateY(3px);
+
+        }
+        .first {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .menu {
+            color: white;
+            display: flex;
+            justify-content: flex-end;
+            flex-direction: column;
+            align-items: center;
+            position: absolute;
+            bottom: 0; 
+            right: 0; 
+            margin: 300px 20px;
+            gap: 10px;
+            font-family: 'Sec'; /* Changed from Sec to 'Sec' */
+        }
+
+        .player{
+            display: flex;
+            text-align: center;
+            align-items: center;
+            justify-content:space-evenly;
+
+        }
+        .server-name{
+            font-family: 'Sec';
+            font-size: 20px;
+            color: #fff;
+            filter: drop-shadow(0 0 0.85rem #ff0000);
+        }
+        
+        .total{
+            font-family: 'Book';
+            font-size: 18px;
+            font-weight: 100;
+            line-height: 28px;
+            letter-spacing: 0.04em;
+            text-align: center;
+        }
+        .date{
+            font-family: 'Regular';    
+            font-weight: 100;
+
+        }
+        .line{
+            width: 1px;
+            height: 25px;
+            background: #D9D9D966;
+        }
+        .server-name-box{
+            display: flex;
+            align-items: center;
+        }
+        .total-user-box {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-box {
+            display: flex;
+            align-items: center; /* Center items vertically */
+            text-align: center;
+            gap: 10px;
+        }
+        .icon-nav{
+            transform: translateY(10px);
+        }
+        .circle-progress{
+            display: flex;
+            justify-content: flex-end;
+            gap: 0;
+        }
+        .gun-slot-con{
+            display: flex;
+            justify-content: flex-end;
+        }
+        .gun-slot {
+          display: flex;
+          width: 176px;
+          align-items: center;
+          justify-content: space-around;
+          height: 55px;
+          text-align: center;
+          background: linear-gradient(270.05deg, rgb(0 0 0 / 26%) 0.05%, rgb(0 0 0 / 3%) 99.96%), linear-gradient(270.81deg, #4f4f4f00 0.83%, rgba(255, 141, 141, 0) 88.88%);
+      }
+            #ammom-total{
+            color: #ffffffa1;
+            font-family: 'Regular';
+            font-weight: 100;
+            transform: translateX(-8px);
+        }
+        .gun-img{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 46px;
+            background: rgba(39, 30, 37, 1);
+            border-radius: 5px;
+        }
+        .down-left {
+            display: flex;
+            position: absolute;
+            width: 875px;
+            height: 90vh;
+            align-items: flex-end;
+            justify-content: center;
+        }
+        .Personajis-bar {
+            width: 343px;
+            /* height: 30px; */
+            display: flex;
+            flex-direction: column;
+            /* transform: translateX(214px) translateY(-85px); */
+            gap: 5px;
+        }
+        /*123*/
+        .healt{
+            width: 50%;
+            background: rgba(217, 217, 217, 0.14);
+            height: 15px;
+        }
+        #hp_value.healt-red {
+            background: rgb(244, 50, 50);
+            height: 13px;
+            border-end-end-radius: 10px;
+            border-start-end-radius: 10px;
+            font-size: 10px;
+            align-items: center;
+            transition: 0.2s;
+            transform:  translateY(-17px);
+        }        
+        
+        #hp_value{
+            color: white;
+            text-align: center;
+            font-family: 'regular';
+        }
+        .health {
+          width: 75%;
+          height: 23px;
+          background: rgb(43, 43, 43);
+          border-radius: 10px;
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+          transform: translateY(-30px) translateX(5px);
+      }
+        .hl-icon{
+          position: relative;
+          transform: translateX(-24px) translateY(7px);
+          z-index: 4;
+        }
+        /*123*/
+        .armour{
+            width: 50%;
+            background: rgba(217, 217, 217, 0.14);
+            height: 15px;
+        }
+        #armour_value, .armour-red {
+            background: rgb(50, 50, 244);
+            height: 13px;
+            border-end-end-radius: 10px;
+            border-start-end-radius: 10px;
+            font-size: 10px;
+            align-items: center;
+            transition: 0.2s;
+            transform: translateX(0px) translateY(-17px);
+        }
+        
+        #arm_value{
+            color: white;
+            text-align: center;
+            font-family: 'regular';
+        }
+        #ammo_value {
+            color: white;
+            text-align: center;
+            font-family: 'regular';           
+        }
+        .armour {
+            width: 75%;
+            height: 23px;
+            background: rgb(43, 43, 43);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            transform: translateY(-15px)translateX(4px);
+        }
+        .armour-icon{
+          position: relative;
+          transform: translateX(-23px) translateY(7px);
+          z-index: 4;
+        }
+        .money{
+            position: absolute;
+            transform: translateX(0px) translateY(-92px);
+            color: white;
+            font-family: monospace;
+            font-size: larger;
+        }
+        .usd{
+            position: absolute;
+            transform: translateX(-1359px) translateY(747px);
+        }
+        .cache{
+            display: flex;
+        }
+        .onBank{
+            color: #ffffffba;
+            display: flex;
+        }
+        .number{
+          position: relative;
+          top: 2px;
+      }
+        @media screen and (max-width: 905px) {
+            .down-left{
+                width: 85%;
+            }
+        }
+        @media screen and (max-height: 702px) {
+            .menu{
+                transform: translateY(150px);
+            }
+        }
+    </style>
+    <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <section class="down-left">
+        <div class="Personajis-bar">
+            <div class="money">
+                <div class="cache">
+                    <h1>$</h1><h1 srtid="cmoney" id="xmoney">155</h1>
+                </div>
+                <div class="onBank">
+                    <h4>$</h4><h4 srtid="bmoney" id="xbmoney">155</h4>
+
+                </div>
+            </div>
+          <div class="health">
+            <img src="/img/guns/healthicon.png" class="hl-icon" width="35px" alt="">
+            <div id="hp_value" class="healt-red">
+                55
+            </div>
+                      </div>
+          <div class="armour">
+            <img src="/img/guns/armor.png" class="armour-icon" width="35px" alt="">
+            <div id="armour_value" class="armour-red">
+                <div id="arm_value" class="number">90</div>
+            </div>
+        </div>
+        </div>
+    </section>
+    <header>
+        <nav>
+            <ul>
+                <div class="first" style="width: 114px; height: 35px; background: rgba(10, 13, 21, 0.54); border-radius: 11.54px; backdrop-filter: blur(4.20px)">
+                    <h3 class="date" id="date">12/3/2023</h3>
+                </div>
+
+                <div class="player" style="width: 332px; height: 35px; background: rgba(10, 13, 21, 0.54); border-radius: 11.54px; backdrop-filter: blur(4.20px)">
+                    <div class="total-user-box">
+                        <img class="" src="/img/guns/User.png" width="19px">
+                        <h3 class="total" value="1" id="playerCount">1/500</h3>
+                    </div>
+                    <span class="line"></span>
+                    <div class="server-name-box">
+                        <img class="C" src="./img/guns/logo.png" width="29px" height="29px">
+                        <h3 class="server-name">ARRIOT</h3>
+                    </div>
+                </div>
+                <h2 class="time" id="clock">00:00</h2>
+            </ul>
+            <div class="gun-slot-con">
+                <div class="gun-slot">
+                    <img src="./img/guns/ammom.png" width="25px" height="30px">
+                    <!-- <h2>31/<h4 id="ammom-total">200</h4></h2> -->
+                    <div id="ammo_value" style="display: block;">10/10</div>
+                    <div class="gun-img">
+                        <img id="fist" class="hud-server-fist" src="img/guns/24.png" width="80px">
+                        <div id="ammo_value_source" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="circle-progress">
+                <div class="box">
+                    <div class="circle" data-dots="70" data-percent="100" style="--bgColor: #FF9900"></div>
+                    <div class="text">
+                        <h2 class = "plevel" id = "mmplevel">5</h2>
+                        <small>მოქალაქეობა</small>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="hung" data-dots="70" data-percent="100" style="--bgColor: #FF0000"></div>
+                    <div class="text">
+                        <h2 id = "mmphunger">5</h2>
+                        <small>შიმშილი</small>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="water" data-dots="70" data-percent="100" style="--bgColor: #00C2FF"></div>
+                    <div class="text">
+                        <h2 id = "mmpthirst">5</h2>
+                        <small>წყურვილი</small>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <section class="menu">
+        <div class="nav-box">
+            <span>M</span>
+            <img class="icon-nav" src="/img/guns/MAIN.png" alt="">
+        </div>
+        
+        <div class="nav-box">
+            <span>L</span>
+            <img class="icon-nav" src="/img/guns/LOCK.png" alt="" >
+        </div>
+        <div class="nav-box">
+            <span>G</span>
+            <img class="icon-nav" src="./img/guns/VZAIM.png" alt="">
+        </div>
+        <div class="nav-box">
+            <span>T</span>
+            <img class="icon-nav" src="./img/guns/CHAT.png" alt="">
+        </div>
+
+        <div class="nav-box">
+            <span>I</span>
+            <img class="icon-nav" src="./img/guns/INV.png" alt="">
+        </div>
+    </section>
+    <script src="script.js"></script>
+    <script>
+        let playerCount = 1; // Initial player count
+
+        function incrementPlayerCount() {
+          playerCount++;
+          const playerCountElement = document.getElementById('playerCount');
+          playerCountElement.setAttribute('value', playerCount.toString());
+        }
+        
+        setInterval(incrementPlayerCount, 1000); // Run incrementPlayerCount every 1000 milliseconds (1 second)
+      </script>
+    <script>
+        cef.emit("game:hud:setComponentVisible", "interface", false);
+        cef.emit("game:data:pollPlayerStats", true, 50);
+        cef.on("game:data:playerStats", (hp, max_hp, arm, breath, wanted, weapon, ammo, max_ammo, money, speed) => {
+            document.getElementById('hp_value').innerText = Math.round(hp);
+            document.getElementById('arm_value').innerText = arm;
+            document.getElementById('fist').src = `img/guns/${weapon}.png`;
+            if(ammo > 0) {
+                document.getElementById("ammo_value_source").style = "display: none;";
+                document.getElementById("ammo_value").style = "display: block;";
+
+                document.getElementById("ammo_value").innerText = `${ammo} / ${max_ammo}`;
+            }
+            else {
+                document.getElementById("ammo_value_source").style = "display: block;";
+                document.getElementById("ammo_value").style = "display: none;";
+            }
+            document.getElementById("xmoney").innerHTML = `${money}`;
+        });
+    </script>    
+    <script>
+      function updateClockAndDate() {
+          const now = new Date();
+          
+          const hours = String(now.getHours()).padStart(2, '0');
+          const minutes = String(now.getMinutes()).padStart(2, '0');
+          const timeString = `${hours}:${minutes}`;
+          const clockElement = document.getElementById('clock');
+          clockElement.textContent = timeString;
+          
+          const day = String(now.getDate()).padStart(2, '0');
+          const month = String(now.getMonth() + 1).padStart(2, '0');
+          const year = now.getFullYear();
+          const dateString = `${month}/${day}/${year}`;
+          const dateElement = document.getElementById('date');
+          dateElement.textContent = dateString;
+        }
+    
+        updateClockAndDate();
+        setInterval(updateClockAndDate, 1000);
+    </script>
+    <script>
+        function updateProgressBar(sourceElementId, targetElementId) {
+            const sourceDiv = document.getElementById(sourceElementId);
+            const value = parseFloat(sourceDiv.textContent);
+    
+            const targetDiv = document.getElementById(targetElementId);
+            targetDiv.style.width = value + "%";
+        }		
+        document.addEventListener("DOMContentLoaded", function () {
+            setInterval(function () {
+                updateProgressBar("hp_value", "hp_value"); // Update hp_value progress bar
+                updateProgressBar("arm_value", "armour_value"); // Update armour_value progress bar
+            }, 10);
+        });
+
+        cef.emit("Hud:info")
+        cef.on('Hud:info', (hudlevel, hudhunger, hudthirst, hudplayers) => {
+            function updateHUD() {
+                document.getElementById('mmplevel').innerHTML = hudlevel;
+                document.getElementById('mmphunger').innerHTML = hudhunger;
+                document.getElementById('mmpthirst').innerHTML = hudthirst;
+                document.getElementById('playerCount').innerHTML = hudplayers;
+                document.getElementById("xbmoney").innerHTML = bankmoney;
+            }
+                        setInterval(updateHUD, 2000);
+        
+        });
+    </script>
+</body>
+</html>
